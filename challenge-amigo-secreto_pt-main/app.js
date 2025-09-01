@@ -1,50 +1,39 @@
 let pessoasAdicionadas = [];
-let pessoaSorteada;
+
 function adicionarAmigo(){
-    let nomeAdicionado = document.getElementById("amigo").value;// seleciona o valor que for digitado
+    let nomeAdicionado = document.getElementById("amigo").value.trim(); // remove espaços extras
     if(nomeAdicionado.length > 0){
         pessoasAdicionadas.push(nomeAdicionado);
-        console.log(pessoasAdicionadas);//mostra se foi adicionado corretamente
-        let nomeNaLista = document.getElementById("listaAmigos");
-        nomeNaLista.innerHTML = pessoasAdicionadas; // adiciona as pessoas visualmente a lista
+        console.log(pessoasAdicionadas); // verificação
+        atualizarLista(); // atualiza a lista no HTML
     } else{
-        alert("nome invalido");//caso invalido avisa o sistema
+        alert("Nome inválido"); // caso vazio
     }
     limparCampo();
-    sortearAmigo();
-    
 }
+
 function atualizarLista(){
+    let lista = document.getElementById("listaAmigos");
+    lista.innerHTML = ""; // limpa antes para não duplicar
 
-    
+    for (let i = 0; i < pessoasAdicionadas.length; i++){
+        lista.innerHTML += `<li>${pessoasAdicionadas[i]}</li>`; 
+    }
 }
-
-
-
-
 
 function sortearAmigo(){
     if (pessoasAdicionadas.length > 0){
-            let sorteio = Math.floor(Math.random()* pessoasAdicionadas.length);
-            let pessoaSorteada = pessoasAdicionadas[sorteio];
-            console.log(sorteio);
-            pessoaSorteada = document.getElementById("resultado");
-            pessoaSorteada.innerHTML = pessoaSorteada;
-            console.log(pessoaSorteada);
-       
-
-
+        let sorteio = Math.floor(Math.random() * pessoasAdicionadas.length);
+        let pessoa = pessoasAdicionadas[sorteio];
+        
+        let resultado = document.getElementById("resultado");
+        resultado.innerHTML = `Amigo sorteado: <strong>${pessoa}</strong>`;
+        console.log("Sorteado:", pessoa);
+    } else {
+        alert("Adicione pelo menos um nome antes de sortear!");
     }
-
 }
-    
-    
-    /* Ninguém pode tirar a si mesmo.Ninguém pode ser sorteado por mais de uma pessoa (ou seja, o sorteio precisa ser justo e único).Todos terminam com um único "amigo secreto" designado.
-*/
-
 
 function limparCampo(){
-    nomeAdicionado = document.getElementById("amigo");
-    nomeAdicionado.value = ""
-
+    document.getElementById("amigo").value = "";
 }
